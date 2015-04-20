@@ -37,7 +37,9 @@ public class DaemonService extends Service {
                     }
                     if (k == 50) {
                         stopSelf();
-                      //  break;
+                    }
+                    if (k == 100) {
+                        break;
                     }
                 }
             }

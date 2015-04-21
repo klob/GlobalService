@@ -91,7 +91,7 @@ public class Command {
 		try {
 			File f = new File(context.getDir(destDir, Context.MODE_PRIVATE), filename);
 			if (f.exists()) {
-				Log.d(TAG, "binary has existed");
+				Log.e(TAG, "binary has existed");
 				return false;
 			}
 

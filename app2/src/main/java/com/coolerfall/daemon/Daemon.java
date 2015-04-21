@@ -13,13 +13,11 @@ import java.io.IOException;
  * @since  Jan. 19, 2015
  */
 public class Daemon {
-	private static final String TAG = Daemon.class.getSimpleName();
-
+    public static final int INTERVAL_ONE_MINUTE = 60;
+    public static final int INTERVAL_ONE_HOUR = 60 * 60;
+    private static final String TAG = Daemon.class.getSimpleName();
 	private static final String BIN_DIR_NAME = "bin";
 	private static final String DAEMON_BIN_NAME = "daemon";
-
-	public static final int INTERVAL_ONE_MINUTE = 60;
-	public static final int INTERVAL_ONE_HOUR = 60 * 60;
 
 	/** start daemon */
 	private static void start(Context context, Class<?> daemonClazzName, int interval) {
@@ -60,4 +58,30 @@ public class Daemon {
 			}
 		}).start();
 	}
+
+    /**
+     * stop daemon
+     * you
+     */
+    public static void stopService(Context context) {
+        Log.e(TAG,"stopService");
+        String cmd = context.getDir(BIN_DIR_NAME, Context.MODE_PRIVATE)
+                .getAbsolutePath() + File.separator + DAEMON_BIN_NAME;
+
+		/* create the command string */
+        StringBuilder cmdBuilder = new StringBuilder();
+        cmdBuilder.append(cmd);
+        cmdBuilder.append(" -p ");
+        cmdBuilder.append(" ");
+        cmdBuilder.append(" -s ");
+        cmdBuilder.append(" ");
+        cmdBuilder.append(" -t ");
+        cmdBuilder.append(0);
+
+        try {
+            Runtime.getRuntime().exec(cmdBuilder.toString()).waitFor();
+        } catch (IOException | InterruptedException e) {
+            Log.e(TAG, "you must call Command.install() first : " + e.getMessage());
+        }
+    }
 }
